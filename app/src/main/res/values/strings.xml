@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">InventoryOnna2</string>
+    <string name="nama_barang">Nama Barang</string>
+    <string name="nama_admin">Nama Admin</string>
+    <string name="Jumlah_set">Jumlah Set</string>
+    <string name="Tambah">Tambah</string>
+</resources>
