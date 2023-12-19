@@ -21,7 +21,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_TITLE = "item_name";
     private static final String COLUMN_AUTHOR = "admin_author";
-    private static final String COLUMN_SET = "item_sets";
+    private static final String COLUMN_PAGES = "item_sets";
 
 
     public MyDatabaseHelper(@Nullable Context context) {
@@ -35,7 +35,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_TITLE + " TEXT, " +
                         COLUMN_AUTHOR + " TEXT, " +
-                        COLUMN_SET + " INTEGER) ;";
+                COLUMN_PAGES + " INTEGER) ;";
         db.execSQL(query);
 
     }
@@ -51,7 +51,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         cv.put(COLUMN_TITLE, title);
         cv.put(COLUMN_AUTHOR, author);
-        cv.put(COLUMN_SET, set);
+        cv.put(COLUMN_PAGES, set);
         long result = db.insert(TABLE_NAME, null, cv);
         if (result == -1 ){
             Toast.makeText(context, "Isi dulu ya", Toast.LENGTH_SHORT).show();
@@ -68,5 +68,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             cursor = db.rawQuery(query, null);
         }
         return cursor;
+    }
+
+    void updateData(String row_id, String title, String author, String pages){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_TITLE, title);
+        cv.put(COLUMN_AUTHOR, author);
+        cv.put(COLUMN_PAGES, pages);
+
+        long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{row_id});
+        if(result == -1){
+            Toast.makeText(context,"Gagal Terupdate!", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context,"Berhasil Terupdate!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
