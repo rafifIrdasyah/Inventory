@@ -59,6 +59,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Sudah terisi!", Toast.LENGTH_SHORT).show();
         }
     }
+
+    void deleteONeRow(String row_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_NAME,"_id=?", new String[]{row_id});
+        if(result ==-1){
+            Toast.makeText(context,"Gagal Dihapus", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Toast.makeText(context,"Berhasil Dihapus", Toast.LENGTH_SHORT).show();
+        }
+    }
     Cursor readAllData(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -83,5 +94,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }else {
             Toast.makeText(context,"Berhasil Terupdate!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    void deleteAllData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_NAME);
     }
 }
