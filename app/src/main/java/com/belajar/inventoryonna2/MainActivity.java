@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         customAdapter = new CustomAdapter(MainActivity.this,this, book_id, book_title,book_author,book_pages);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
     }
 
     @Override
@@ -101,11 +102,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()== R.id.delete_all){
+
+        if (item.getItemId() == R.id.refresh_button) {
+            refreshDialog();
+        return true;
+
+        }else if(item.getItemId()== R.id.delete_all){
             confirmDialog();
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
+
+
     void confirmDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Hapus semua?");
@@ -119,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
                 recreate();
             }
         });
+
+
         builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -127,4 +137,29 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.create().show();
     }
+
+    void refreshDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("refresh semua?");
+        builder.setMessage("Ingin refresh semua data ?");
+        builder.setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
+                myDB.readAllData();
+                //refresh data
+                recreate();
+            }
+        });
+
+
+        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.create().show();
+    }
+
 }

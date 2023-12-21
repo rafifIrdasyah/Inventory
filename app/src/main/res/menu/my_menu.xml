@@ -7,4 +7,9 @@
         app:showAsAction="always"
         android:title="Delete All" />
 
+    <item android:id="@+id/refresh_button"
+        android:icon="@drawable/baseline_refresh_24"
+        app:showAsAction="always"
+        android:title="TODO" />
+
 </menu>
